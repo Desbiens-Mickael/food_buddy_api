@@ -1,11 +1,10 @@
 package fr.olprog_b.food_buddy.dto.user;
 
-public class PostUserDTO {
+public class PutUserDTO {
+  private String email;
   private String firstname;
   private String lastname;
   private String profileImageUrl;
-  private String email;
-  private String password;
 
   public String getEmail() {
     return email;
@@ -37,13 +36,5 @@ public class PostUserDTO {
 
   public void setProfileImageUrl(String profileImageUrl) {
     this.profileImageUrl = profileImageUrl;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 }

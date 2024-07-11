@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import fr.olprog_b.food_buddy.dto.user.PostUserDTO;
+import fr.olprog_b.food_buddy.dto.user.PutUserDTO;
 import fr.olprog_b.food_buddy.dto.user.UserResponseDTO;
 import fr.olprog_b.food_buddy.dto.user.mapper.PostUserMapper;
 import fr.olprog_b.food_buddy.dto.user.mapper.UserResponseMapper;
@@ -39,7 +40,7 @@ public class UserService {
     return userRepository.findAll().stream().map(UserResponseMapper::convertToDTO).collect(Collectors.toList());
   }
 
-  public Optional<UserResponseDTO> updateUser(Long id, UserResponseDTO userDTO) {
+  public Optional<UserResponseDTO> updateUser(Long id, PutUserDTO userDTO) {
     Optional<User> optionalUser = userRepository.findById(id);
     if (!optionalUser.isPresent()) {
       return Optional.empty();
@@ -49,9 +50,6 @@ public class UserService {
     user.setFirstname(userDTO.getFirstname());
     user.setLastname(userDTO.getLastname());
     user.setProfileImageUrl(userDTO.getProfileImageUrl());
-    user.setPassword(userDTO.getPassword());
-    user.setRole(userDTO.getRole());
-    user.setIsEligible(userDTO.getIsEligible());
     User updatedUser = userRepository.save(user);
 
     return Optional.of(UserResponseMapper.convertToDTO(updatedUser));

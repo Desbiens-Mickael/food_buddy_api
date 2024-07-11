@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.olprog_b.food_buddy.dto.user.PutUserDTO;
 import fr.olprog_b.food_buddy.dto.user.UserResponseDTO;
 import fr.olprog_b.food_buddy.service.UserService;
 
@@ -45,7 +46,7 @@ public class UserController {
   }
   
   @PutMapping("/{id}")
-  public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserResponseDTO user) {
+  public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody PutUserDTO user) {
     Optional<UserResponseDTO> updatedUser = userService.updateUser(id, user);
     if (!updatedUser.isPresent()) {
       return ResponseEntity.notFound().build();
@@ -62,5 +63,4 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
-  
 }
