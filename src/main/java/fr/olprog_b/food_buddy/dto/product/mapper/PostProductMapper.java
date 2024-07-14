@@ -7,11 +7,11 @@ public class PostProductMapper {
 
   public Product convertToEntity(PostProductDTO postProductDTO) {
     Product product = new Product();
-    product.setName(postProductDTO.getName());
-    product.setDescription(postProductDTO.getDescription());
-    product.setPrice(postProductDTO.getPrice());
-    product.setType(postProductDTO.getType());
-    product.setStatus(postProductDTO.getStatus());
+    product.setName(postProductDTO.name());
+    product.setDescription(postProductDTO.description());
+    product.setPrice(postProductDTO.price());
+    product.setType(postProductDTO.type());
+    product.setStatus(postProductDTO.status());
     product.setEstablishment(null);
     product.setAllergens(null);
     return product;

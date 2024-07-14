@@ -43,16 +43,16 @@ public class UserService {
     return userRepository.findAll().stream().map(UserResponseMapper::convertToDTO).collect(Collectors.toList());
   }
 
-  public Optional<UserResponseDTO> updateUser(Long id, PutUserDTO userDTO) {
+  public Optional<UserResponseDTO> updateUser(Long id, PutUserDTO putUserDTO) {
     Optional<User> optionalUser = userRepository.findById(id);
     if (!optionalUser.isPresent()) {
       return Optional.empty();
     }
     User user = optionalUser.get();
-    user.setEmail(userDTO.getEmail());
-    user.setFirstname(userDTO.getFirstname());
-    user.setLastname(userDTO.getLastname());
-    user.setProfileImageUrl(userDTO.getProfileImageUrl());
+    user.setEmail(putUserDTO.email());
+    user.setFirstname(putUserDTO.firstname());
+    user.setLastname(putUserDTO.lastname());
+    user.setProfileImageUrl(putUserDTO.profileImageUrl());
     User updatedUser = userRepository.save(user);
 
     return Optional.of(UserResponseMapper.convertToDTO(updatedUser));

@@ -8,7 +8,7 @@ import fr.olprog_b.food_buddy.model.User;
 
 @Component
 public class PostUserMapper {
-   private final PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
   public PostUserMapper(PasswordEncoder passwordEncoder) {
     this.passwordEncoder = passwordEncoder;
@@ -16,11 +16,11 @@ public class PostUserMapper {
 
   public User convertToEntity(PostUserDTO userDTO) {
     User user = new User();
-    user.setEmail(userDTO.getEmail());
-    user.setFirstname(userDTO.getFirstname());
-    user.setLastname(userDTO.getLastname());
-    user.setProfileImageUrl(userDTO.getProfileImageUrl());
-    user.setPassword(this.passwordEncoder.encode(userDTO.getPassword()));
+    user.setEmail(userDTO.email());
+    user.setFirstname(userDTO.firstname());
+    user.setLastname(userDTO.lastname());
+    user.setProfileImageUrl(userDTO.profileImageUrl());
+    user.setPassword(this.passwordEncoder.encode(userDTO.password()));
     return user;
   }
 }

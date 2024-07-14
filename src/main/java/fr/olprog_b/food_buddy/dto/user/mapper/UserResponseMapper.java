@@ -5,16 +5,16 @@ import fr.olprog_b.food_buddy.model.User;
 
 public class UserResponseMapper {
   public static UserResponseDTO convertToDTO(User user) {
-    UserResponseDTO userDTO = new UserResponseDTO();
-    // userDTO.setId(user.getId());
-    userDTO.setEmail(user.getEmail());
-    userDTO.setFirstname(user.getFirstname());
-    userDTO.setLastname(user.getLastname());
-    userDTO.setProfileImageUrl(user.getProfileImageUrl());
-    userDTO.setRole(user.getRole());
-    userDTO.setIsEligible(user.getIsEligible());
-    userDTO.setCreatedAt(user.getCreatedAt());
-    userDTO.setUpdatedAt(user.getUpdatedAt());
+    UserResponseDTO userDTO = new UserResponseDTO(
+      user.getEmail(),
+      user.getFirstname(),
+      user.getLastname(),
+      user.getProfileImageUrl(),
+      user.getRole(),
+      user.getIsEligible(),
+      user.getCreatedAt(),
+      user.getUpdatedAt()
+    );
     return userDTO;
   } 
 }
