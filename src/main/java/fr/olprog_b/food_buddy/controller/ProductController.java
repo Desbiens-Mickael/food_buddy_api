@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.olprog_b.food_buddy.dto.product.PostProductDTO;
+import fr.olprog_b.food_buddy.dto.product.ProductResponseDTO;
 import fr.olprog_b.food_buddy.model.Product;
 
 @RestController
@@ -31,33 +33,33 @@ public class ProductController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Product> getProductById(@PathVariable Long establishmentId, @PathVariable Long id) {
+  public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long establishmentId, @PathVariable Long id) {
       // TODO: Modifier pour ajouter la récupération du produit
-      Optional<Product> optionalProduct = Optional.empty();
+      Optional<ProductResponseDTO> optionalProduct = Optional.empty();
       if (!optionalProduct.isPresent()) {
         return ResponseEntity.noContent().build();
       }
-      Product product = optionalProduct.orElse(null);
+      ProductResponseDTO product = optionalProduct.orElse(null);
 
       return ResponseEntity.ok(product);
   }
 
   @PostMapping()
-  public ResponseEntity<Product> createProduct(@PathVariable Long establishmentId, @RequestBody Product product) {
+  public ResponseEntity<ProductResponseDTO> createProduct(@PathVariable Long establishmentId, @RequestBody PostProductDTO productDTO) {
       // TODO: Modifier pour ajouter la création du produit
-      Product newProduct = null;
+      ProductResponseDTO newProduct = null;
       return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
   }
 
   @PutMapping()
-  public ResponseEntity<Product> updateProduct(@PathVariable Long establishmentId, @PathVariable Long id) {
+  public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long establishmentId, @PathVariable Long id) {
       // TODO: Modifier pour ajouter la modification du produit
-      Optional<Product> optionalProduct = Optional.empty();
+      Optional<ProductResponseDTO> optionalProduct = Optional.empty();
       if (!optionalProduct.isPresent()) {
         return ResponseEntity.noContent().build();
       }
 
-      Product product = optionalProduct.orElse(null);
+      ProductResponseDTO product = optionalProduct.orElse(null);
       return ResponseEntity.ok(product);
   }
 

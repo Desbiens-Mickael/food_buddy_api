@@ -1,10 +1,14 @@
 package fr.olprog_b.food_buddy.model;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import fr.olprog_b.food_buddy.enums.UserRole;
 import jakarta.persistence.CascadeType;
@@ -17,10 +21,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -64,107 +70,34 @@ public class User {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Reservation> reservations;
   
-  public Long getId() {
-    return id;
+// "ROLE_" + 
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  @Override
+  public String getUsername() {
+    return this.email;
   }
 
-  public String getEmail() {
-    return email;
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
   }
 
-  public String getFirstname() {
-    return firstname;
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
   }
 
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
-  }
-
-  public String getLastname() {
-    return lastname;
-  }
-
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
-  }
-
-  public String getProfileImageUrl() {
-    return profileImageUrl;
-  }
-
-  public void setProfileImageUrl(String profileImageUrl) {
-    this.profileImageUrl = profileImageUrl;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public UserRole getRole() {
-    return role;
-  }
-
-  public void setRole(UserRole role) {
-    this.role = role;
-  }
-
-  public Boolean getIsEligible() {
-    return isEligible;
-  }
-
-  public void setIsEligible(Boolean isEligible) {
-    this.isEligible = isEligible;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public List<Business> getBusinesses() {
-    return businesses;
-  }
-
-  public void setBusinesses(List<Business> businesses) {
-    this.businesses = businesses;
-  }
-
-  public List<DailyConsumption> getDailyConsumptions() {
-    return dailyConsumptions;
-  }
-
-  public void setDailyConsumptions(List<DailyConsumption> dailyConsumptions) {
-    this.dailyConsumptions = dailyConsumptions;
-  }
-
-  public List<Reservation> getReservations() {
-    return reservations;
-  }
-
-  public void setReservations(List<Reservation> reservations) {
-    this.reservations = reservations;
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }

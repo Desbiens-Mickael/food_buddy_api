@@ -13,7 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity()
 @Table(name = "reservations")
 public class Reservation {
@@ -43,52 +45,4 @@ public class Reservation {
   @ManyToOne()
   @JoinColumn(name = "product_id", nullable = false)
   private Product product;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getValidationCode() {
-    return validationCode;
-  }
-
-  public void setValidationCode(String validationCode) {
-    this.validationCode = validationCode;
-  }
-
-  public LocalDateTime getValidUntil() {
-    return validUntil;
-  }
-
-  public void setValidUntil(LocalDateTime validUntil) {
-    this.validUntil = validUntil;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Product getProduct() {
-    return product;
-  }
-
-  public void setProduct(Product product) {
-    this.product = product;
-  }
 }

@@ -14,7 +14,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "establishment_addresses")
 public class EstablishmentAddress {
@@ -51,86 +53,4 @@ public class EstablishmentAddress {
   @ManyToOne()
   @JoinColumn(name = "establishment_id", nullable = false)
   private Establishment establishment;
-
-  // Getters and Setters
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Integer getStreetNumber() {
-    return streetNumber;
-  }
-
-  public void setStreetNumber(Integer streetNumber) {
-    this.streetNumber = streetNumber;
-  }
-
-  public String getStreetName() {
-    return streetName;
-  }
-
-  public void setStreetName(String streetName) {
-    this.streetName = streetName;
-  }
-
-  public String getZipCode() {
-    return zipCode;
-  }
-
-  public void setZipCode(String zipCode) {
-    this.zipCode = zipCode;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public BigDecimal getLatitude() {
-    return latitude;
-  }
-
-  public void setLatitude(BigDecimal latitude) {
-    this.latitude = latitude;
-  }
-
-  public BigDecimal getLongitude() {
-    return longitude;
-  }
-
-  public void setLongitude(BigDecimal longitude) {
-    this.longitude = longitude;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public Establishment getEstablishment() {
-    return establishment;
-  }
-
-  public void setEstablishment(Establishment establishment) {
-    this.establishment = establishment;
-  }
 }

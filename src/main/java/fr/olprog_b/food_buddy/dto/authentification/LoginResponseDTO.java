@@ -7,7 +7,6 @@ public class LoginResponseDTO {
   private String firstname;
   private String lastname;
   private String profileImageUrl;
-  private String password;
   private UserRole role = UserRole.USER;
   private Boolean isEligible = false;
 
@@ -41,14 +40,6 @@ public class LoginResponseDTO {
 
   public void setProfileImageUrl(String profileImageUrl) {
     this.profileImageUrl = profileImageUrl;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   public UserRole getRole() {

@@ -17,13 +17,16 @@ import fr.olprog_b.food_buddy.repository.UserRepository;
 @Service
 public class UserService {
   private final UserRepository userRepository;
+  private final PostUserMapper postUserMapper;
+  
 
-  public UserService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository, PostUserMapper postUserMapper) {
     this.userRepository = userRepository;
+    this.postUserMapper = postUserMapper;
   }
 
   public UserResponseDTO createUser(PostUserDTO userDTO) {
-    User user = userRepository.save(PostUserMapper.convertToEntity(userDTO));
+    User user = userRepository.save(postUserMapper.convertToEntity(userDTO));
     return UserResponseMapper.convertToDTO(user);
   }
 

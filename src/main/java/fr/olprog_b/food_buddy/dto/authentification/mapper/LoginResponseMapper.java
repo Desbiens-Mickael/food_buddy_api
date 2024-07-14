@@ -13,7 +13,6 @@ import fr.olprog_b.food_buddy.model.User;
       loginResponseDTO.setFirstname(user.getFirstname());
       loginResponseDTO.setLastname(user.getLastname());
       loginResponseDTO.setProfileImageUrl(user.getProfileImageUrl());
-      loginResponseDTO.setPassword(user.getPassword());
       loginResponseDTO.setRole(user.getRole());
       loginResponseDTO.setIsEligible(user.getIsEligible());
       return loginResponseDTO;

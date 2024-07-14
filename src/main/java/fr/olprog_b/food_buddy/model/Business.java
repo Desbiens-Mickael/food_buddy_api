@@ -13,7 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "businesses")
 public class Business {
@@ -44,71 +46,4 @@ public class Business {
 
   @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Establishment> establishments;
-
-  // Getters and Setters
-
-  public String getSiren() {
-    return siren;
-  }
-
-  public void setSiren(String siren) {
-    this.siren = siren;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getLogoUrl() {
-    return logoUrl;
-  }
-
-  public void setLogoUrl(String logoUrl) {
-    this.logoUrl = logoUrl;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public List<Establishment> getEstablishments() {
-    return establishments;
-  }
-
-  public void setEstablishments(List<Establishment> establishments) {
-    this.establishments = establishments;
-  }
-
 }
