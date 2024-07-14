@@ -11,9 +11,8 @@ public class UserResponseMapper {
     userDTO.setFirstname(user.getFirstname());
     userDTO.setLastname(user.getLastname());
     userDTO.setProfileImageUrl(user.getProfileImageUrl());
-    userDTO.setPassword(user.getPassword());
-    // userDTO.setRole(user.getRole());
-    // userDTO.setIsEligible(user.getIsEligible());
+    userDTO.setRole(user.getRole());
+    userDTO.setIsEligible(user.getIsEligible());
     userDTO.setCreatedAt(user.getCreatedAt());
     userDTO.setUpdatedAt(user.getUpdatedAt());
     return userDTO;

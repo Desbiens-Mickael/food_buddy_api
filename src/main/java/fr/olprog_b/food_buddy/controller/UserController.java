@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.olprog_b.food_buddy.dto.user.PutUserDTO;
 import fr.olprog_b.food_buddy.dto.user.UserResponseDTO;
+import fr.olprog_b.food_buddy.model.User;
 import fr.olprog_b.food_buddy.service.UserService;
 
 @RestController
@@ -35,19 +36,19 @@ public class UserController {
     return ResponseEntity.ok(users);
   }
 
-  @GetMapping("/me/{id}")
-  public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
-    Optional<UserResponseDTO> user = userService.getUserById(id);
-    if (!user.isPresent()) {
+  @GetMapping("/me")
+  public ResponseEntity<UserResponseDTO> getUserById(@AuthenticationPrincipal User user) {
+    Optional<UserResponseDTO> optionalUser = userService.getUserById(user.getId());
+    if (!optionalUser.isPresent()) {
       return ResponseEntity.notFound().build();
     }
   
-    return ResponseEntity.ok(user.get());
+    return ResponseEntity.ok(optionalUser.get());
   }
   
-  @PutMapping("/{id}")
-  public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody PutUserDTO user) {
-    Optional<UserResponseDTO> updatedUser = userService.updateUser(id, user);
+  @PutMapping()
+  public ResponseEntity<UserResponseDTO> updateUser(@AuthenticationPrincipal User user, @RequestBody PutUserDTO putUserDTO) {
+    Optional<UserResponseDTO> updatedUser = userService.updateUser(user.getId(), putUserDTO);
     if (!updatedUser.isPresent()) {
       return ResponseEntity.notFound().build();
     }
@@ -55,9 +56,9 @@ public class UserController {
     return ResponseEntity.ok(updatedUser.get());
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Boolean> deleteUser(@PathVariable Long id) {
-    if (userService.deleteUser(id)) {
+  @DeleteMapping()
+  public ResponseEntity<Boolean> deleteUser(@AuthenticationPrincipal User user) {
+    if (userService.deleteUser(user.getId())) {
       return ResponseEntity.noContent().build();
     } else {
       return ResponseEntity.notFound().build();
