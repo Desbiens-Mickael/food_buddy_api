@@ -6,7 +6,7 @@ import fr.olprog_b.food_buddy.dto.authentification.LoginResponseDTO;
 import fr.olprog_b.food_buddy.model.User;
 
 @Component
-  public class LoginResponseMapper {
+public class LoginResponseMapper {
     public static LoginResponseDTO convertToDTO(User user) {
       LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
       loginResponseDTO.setEmail(user.getEmail());

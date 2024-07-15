@@ -1,7 +1,9 @@
 package fr.olprog_b.food_buddy.dto.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import fr.olprog_b.food_buddy.dto.allergen.AllergenResponseDTO;
 import fr.olprog_b.food_buddy.enums.ProductStatus;
 import fr.olprog_b.food_buddy.enums.ProductType;
 
@@ -11,7 +13,7 @@ public record ProductResponseDTO(
   BigDecimal price,
   ProductType type,
   ProductStatus status,
-  // AllergenDTO[] allergens,
-  Long establishmentId
+  Long establishmentId,
+  List<AllergenResponseDTO> allergens
 ) {
 }

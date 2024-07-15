@@ -1,8 +1,11 @@
 package fr.olprog_b.food_buddy.dto.product.mapper;
 
+import org.springframework.stereotype.Component;
+
 import fr.olprog_b.food_buddy.dto.product.PostProductDTO;
 import fr.olprog_b.food_buddy.model.Product;
 
+@Component
 public class PostProductMapper {
 
   public Product convertToEntity(PostProductDTO postProductDTO) {

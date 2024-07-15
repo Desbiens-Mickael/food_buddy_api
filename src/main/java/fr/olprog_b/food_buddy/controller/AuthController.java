@@ -7,6 +7,8 @@ import fr.olprog_b.food_buddy.dto.authentification.LoginDTO;
 import fr.olprog_b.food_buddy.dto.authentification.LoginResponseDTO;
 import fr.olprog_b.food_buddy.dto.authentification.mapper.LoginResponseMapper;
 import fr.olprog_b.food_buddy.dto.user.PostUserDTO;
+import fr.olprog_b.food_buddy.dto.user.PostUserMerchantDTO;
+import fr.olprog_b.food_buddy.dto.user.UserMerchantResponseDTO;
 import fr.olprog_b.food_buddy.dto.user.UserResponseDTO;
 import fr.olprog_b.food_buddy.model.User;
 import fr.olprog_b.food_buddy.service.AuthentificationService;
@@ -61,8 +63,12 @@ public class AuthController {
     }
     
     @PostMapping("/merchant/register") // Lazhar
-    public void registerMerchant(@RequestBody User user) {
-        //TODO: Mise en place de la création d'un commerçant
+    public ResponseEntity<UserMerchantResponseDTO> registerMerchant(@Valid @RequestBody PostUserMerchantDTO newMerchant) {
+        UserMerchantResponseDTO createdMerchant = userService.createUserMerchant(newMerchant);
+        if (createdMerchant == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMerchant);
     }
 
     @PostMapping("/login")

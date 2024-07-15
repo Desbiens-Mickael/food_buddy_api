@@ -7,27 +7,40 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import fr.olprog_b.food_buddy.dto.user.PostUserDTO;
+import fr.olprog_b.food_buddy.dto.user.PostUserMerchantDTO;
 import fr.olprog_b.food_buddy.dto.user.PutUserDTO;
+import fr.olprog_b.food_buddy.dto.user.UserMerchantResponseDTO;
 import fr.olprog_b.food_buddy.dto.user.UserResponseDTO;
 import fr.olprog_b.food_buddy.dto.user.mapper.PostUserMapper;
+import fr.olprog_b.food_buddy.dto.user.mapper.PostUserMerchantMapper;
+import fr.olprog_b.food_buddy.dto.user.mapper.UserMerchantResponseMapper;
 import fr.olprog_b.food_buddy.dto.user.mapper.UserResponseMapper;
 import fr.olprog_b.food_buddy.model.User;
 import fr.olprog_b.food_buddy.repository.UserRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
   private final UserRepository userRepository;
   private final PostUserMapper postUserMapper;
+  private final PostUserMerchantMapper postUserMerchantMapper;
   
 
-  public UserService(UserRepository userRepository, PostUserMapper postUserMapper) {
+  public UserService(UserRepository userRepository, PostUserMapper postUserMapper, PostUserMerchantMapper postUserMerchantMapper) {
     this.userRepository = userRepository;
     this.postUserMapper = postUserMapper;
+    this.postUserMerchantMapper = postUserMerchantMapper;
   }
 
   public UserResponseDTO createUser(PostUserDTO userDTO) {
     User user = userRepository.save(postUserMapper.convertToEntity(userDTO));
     return UserResponseMapper.convertToDTO(user);
+  }
+
+  @Transactional
+  public UserMerchantResponseDTO createUserMerchant(PostUserMerchantDTO userDTO) {
+    User user = userRepository.save(postUserMerchantMapper.convertToEntity(userDTO));
+    return UserMerchantResponseMapper.convertToDto(user);
   }
 
   public Optional<UserResponseDTO> getUserById(Long id) {
