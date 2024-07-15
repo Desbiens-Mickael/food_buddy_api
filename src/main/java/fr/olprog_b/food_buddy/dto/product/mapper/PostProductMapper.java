@@ -8,15 +8,14 @@ import fr.olprog_b.food_buddy.model.Product;
 @Component
 public class PostProductMapper {
 
-  public Product convertToEntity(PostProductDTO postProductDTO) {
+  public static Product convertToEntity(PostProductDTO postProductDTO) {
     Product product = new Product();
     product.setName(postProductDTO.name());
     product.setDescription(postProductDTO.description());
     product.setPrice(postProductDTO.price());
     product.setType(postProductDTO.type());
     product.setStatus(postProductDTO.status());
-    product.setEstablishment(null);
-    product.setAllergens(null);
+    product.setImageUrl(postProductDTO.imageUrl());
     return product;
   }
 }

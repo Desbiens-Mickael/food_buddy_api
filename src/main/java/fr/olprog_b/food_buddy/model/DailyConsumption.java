@@ -2,6 +2,8 @@ package fr.olprog_b.food_buddy.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import fr.olprog_b.food_buddy.enums.ProductType;
 
 import jakarta.persistence.Column;
@@ -22,7 +24,8 @@ public class DailyConsumption {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, updatable = false)
+  @CreationTimestamp()
   private LocalDateTime consumptionDate;
 
   @Column(nullable = false)

@@ -3,6 +3,9 @@ package fr.olprog_b.food_buddy.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,10 +39,12 @@ public class Establishment {
   @Column()
   private String phoneNumber;
 
-  @Column(updatable = false)
+  @Column(nullable = false, updatable = false)
+  @CreationTimestamp()
   private LocalDateTime createdAt;
 
-  @Column(updatable = true)
+  @Column(nullable = false, updatable = true)
+  @UpdateTimestamp()
   private LocalDateTime updatedAt;
 
   @ManyToOne()
