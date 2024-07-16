@@ -30,7 +30,7 @@ public class AuthentificationService {
     response.addHeader("Set-Cookie", cookie.toString());
   }
 
-    @Transactional
+  @Transactional
   public Boolean isAuthorEstablisment(Long userId, Long establishmentId) {
     Establishment establishment = establishmentRepository.findById(establishmentId).orElse(null);
     if (establishment == null) {

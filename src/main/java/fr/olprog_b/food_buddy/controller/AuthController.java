@@ -53,6 +53,7 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
+    // Création d'un utilisateur
     @PostMapping("/users/register")
     public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody PostUserDTO newUser) {
         UserResponseDTO createdUser = userService.createUser(newUser);
@@ -62,7 +63,8 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
     
-    @PostMapping("/merchant/register") // Lazhar
+    // Création d'un commerçant
+    @PostMapping("/merchant/register")
     public ResponseEntity<UserMerchantResponseDTO> registerMerchant(@Valid @RequestBody PostUserMerchantDTO newMerchant) {
         UserMerchantResponseDTO createdMerchant = userService.createUserMerchant(newMerchant);
         if (createdMerchant == null) {

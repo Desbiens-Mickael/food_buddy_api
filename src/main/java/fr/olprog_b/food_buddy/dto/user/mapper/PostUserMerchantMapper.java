@@ -8,6 +8,7 @@ import fr.olprog_b.food_buddy.dto.business.mapper.PostBusinessMapper;
 import fr.olprog_b.food_buddy.dto.establishment.mapper.PostEstablishmentMapper;
 import fr.olprog_b.food_buddy.dto.establishmentAddress.mapper.PostEstablishmentaddressMapper;
 import fr.olprog_b.food_buddy.dto.user.PostUserMerchantDTO;
+import fr.olprog_b.food_buddy.enums.UserRole;
 import fr.olprog_b.food_buddy.model.Business;
 import fr.olprog_b.food_buddy.model.Establishment;
 import fr.olprog_b.food_buddy.model.EstablishmentAddress;
@@ -32,6 +33,7 @@ public class PostUserMerchantMapper {
     establishment.setBusiness(business);
 
     User user = postUserMapper.convertToEntity(newUser.newUser());
+    user.setRole(UserRole.MERCHANT);
     user.setBusinesses(List.of(business));
     business.setUser(user);
 
