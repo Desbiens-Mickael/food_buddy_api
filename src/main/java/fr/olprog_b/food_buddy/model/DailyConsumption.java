@@ -8,6 +8,8 @@ import fr.olprog_b.food_buddy.enums.ProductType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +31,7 @@ public class DailyConsumption {
   private LocalDateTime consumptionDate;
 
   @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
   private ProductType consumptionType;
 
   // Relations

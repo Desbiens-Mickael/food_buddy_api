@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,7 @@ public class ProductController {
   }
 
   @PostMapping()
+  @PreAuthorize("hasRole('ROLE_MERCHANT')")
   public ResponseEntity<ProductResponseDTO> createProduct(@AuthenticationPrincipal User user, @PathVariable Long establishmentId, @RequestBody PostProductDTO productDTO) {
     if(!authentificationService.isAuthorEstablisment(user.getId(), establishmentId)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -64,6 +66,7 @@ public class ProductController {
   }
 
   @PutMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_MERCHANT')")
   public ResponseEntity<ProductResponseDTO> updateProduct(@AuthenticationPrincipal User user,@PathVariable Long establishmentId, @PathVariable Long id, @RequestBody PostProductDTO productDTO) {
     if(!authentificationService.isAuthorEstablisment(user.getId(), establishmentId)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -77,6 +80,7 @@ public class ProductController {
   }
 
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_MERCHANT')")
   public ResponseEntity<Product> deleteProduct(@AuthenticationPrincipal User user, @PathVariable Long establishmentId, @PathVariable Long id) {
       if(!authentificationService.isAuthorEstablisment(user.getId(), establishmentId)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

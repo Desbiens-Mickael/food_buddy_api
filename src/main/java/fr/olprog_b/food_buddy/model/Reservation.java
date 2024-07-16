@@ -1,6 +1,7 @@
 package fr.olprog_b.food_buddy.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,7 +24,7 @@ public class Reservation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String validationCode;
 
   @Column(name = "valid_until", nullable = false)
@@ -36,6 +37,11 @@ public class Reservation {
   @PrePersist
   protected void onCreate() {
     this.validUntil = LocalDateTime.now().plusDays(1);
+    this.validationCode = generateUniqueCode();
+  }
+
+  private String generateUniqueCode() {
+      return UUID.randomUUID().toString();
   }
 
   @ManyToOne()

@@ -9,6 +9,7 @@ import fr.olprog_b.food_buddy.service.EstablishmentService;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,8 @@ public class EstablishmentController {
   }
   
   @GetMapping
+  @PreAuthorize("hasRole('ROLE_MERCHANT')")
   public ResponseEntity<List<EstablishmentResponseDTO>> getAllEstablishment(@AuthenticationPrincipal User user) {
-
     List<EstablishmentResponseDTO> establishmentResponseDTO = establishmentService.getAllEstablishment(user.getId());
     if (establishmentResponseDTO == null) {
       return ResponseEntity.badRequest().build();
