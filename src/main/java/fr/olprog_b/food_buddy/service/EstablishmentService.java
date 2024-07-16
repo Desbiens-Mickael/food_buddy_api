@@ -26,6 +26,11 @@ public class EstablishmentService {
 
   public List<EstablishmentResponseDTO> getAllEstablishment(Long UserId) {
     User user = userRepository.findById(UserId).get();
-    return establishmentRepository.findByBusinessId(user.getBusinesses().get(0).getId()).stream().map(EstablishmentResponseMapper::convertToDto).collect(Collectors.toList());
+    return establishmentRepository
+            .findByBusinessId(user.getBusinesses()
+            .get(0).getId())
+            .stream()
+            .map(EstablishmentResponseMapper::convertToDto)
+            .collect(Collectors.toList());
   }
 }

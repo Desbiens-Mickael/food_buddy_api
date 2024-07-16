@@ -21,10 +21,10 @@ public class EstablishmentAddressController {
 
   @GetMapping
   public ResponseEntity<List<EstablishmentAddressResponseDTO>> getAllEstablishmentAddress() {
-    List<EstablishmentAddressResponseDTO> establishmentAddresses = establishmentAddressService.getAllEstablishmentAddress();
-    if (establishmentAddresses.isEmpty()) {
+    List<EstablishmentAddressResponseDTO> establishmentAddresseDTOs = establishmentAddressService.getAllEstablishmentAddress();
+    if (establishmentAddresseDTOs.isEmpty()) {
       return ResponseEntity.noContent().build();
     }
-    return ResponseEntity.ok(establishmentAddresses);
+    return ResponseEntity.ok(establishmentAddresseDTOs);
   }
 }
