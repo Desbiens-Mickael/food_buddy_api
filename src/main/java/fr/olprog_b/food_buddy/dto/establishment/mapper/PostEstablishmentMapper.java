@@ -15,4 +15,13 @@ public class PostEstablishmentMapper {
     establishment.setPhoneNumber(postEstablishmentDTO.phoneNumber());
     return establishment;
   }
+
+  public static PostEstablishmentDTO convertToDto(Establishment establishment) {
+    return new PostEstablishmentDTO(
+      establishment.getName(),
+      establishment.getSiret(),
+      establishment.getEmail(),
+      establishment.getPhoneNumber()
+    );
+  }
 }

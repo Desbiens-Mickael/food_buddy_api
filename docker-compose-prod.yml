@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  db:
+    image: mickael01/bdd_postgres_food_buddy:latest
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGUSER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - 5432:5432
+    # env_file:
+    #   - .env
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    image: mickael01/food_buddy_api_springboot:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DATABASE_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_JPA_SHOW_SQL: ${SHOW_SQL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+    depends_on:
+      db:
+        condition: service_healthy
+    # ports:
+    #   - "8080:8080"
+    restart: always
+    # env_file:
+    #   - .env
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`food-buddy.olprog-b.fr`)"
+      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.services.api.loadbalancer.server.port=8080"
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - web
+    ports:
+      - 8082:8080
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer.rule=Host(`adminer.olprog-b.fr`)"
+      - "traefik.http.routers.adminer.entrypoints=web"
+      - "traefik.http.services.adminer.loadbalancer.server.port=8080"
+
+networks:
+  web:
+    # external: true
+
+volumes:
+  postgres_data:

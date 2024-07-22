@@ -1,1 +1,1 @@
-CREATE DATABASE "food-buddy";
+CREATE DATABASE IF NOT EXISTS food_buddy;

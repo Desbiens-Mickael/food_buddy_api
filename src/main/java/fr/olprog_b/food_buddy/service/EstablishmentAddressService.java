@@ -18,8 +18,13 @@ public class EstablishmentAddressService {
     this.establishmentAddressRepository = establishmentAddressRepository;
   }
 
-  public List<EstablishmentAddressResponseDTO> getAllEstablishmentAddress() {
-    List<EstablishmentAddress> establishmentAddress = establishmentAddressRepository.findAll();
+  public List<EstablishmentAddressResponseDTO> getAllEstablishmentAddress(String keyword) {
+    List<EstablishmentAddress> establishmentAddress;
+    if (keyword == null || keyword.isEmpty()) {
+      establishmentAddress = establishmentAddressRepository.findAll();
+    } else {
+      establishmentAddress = establishmentAddressRepository.findByEstablishmentNameContainingIgnoreCase(keyword);
+    }
     if (establishmentAddress == null) {
       return null;
     }

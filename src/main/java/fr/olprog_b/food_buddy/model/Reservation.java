@@ -41,7 +41,11 @@ public class Reservation {
   }
 
   private String generateUniqueCode() {
-      return UUID.randomUUID().toString();
+      return UUID
+        .randomUUID()
+        .toString()
+        .replaceAll("-", "")
+        .substring(0, 8);
   }
 
   @ManyToOne()

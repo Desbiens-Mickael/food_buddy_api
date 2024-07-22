@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import fr.olprog_b.food_buddy.dto.reservation.ReservationResponseDTO;
 import fr.olprog_b.food_buddy.dto.reservation.mapper.ReservationResponseMapper;
-import fr.olprog_b.food_buddy.enums.ProductStatus;
 import fr.olprog_b.food_buddy.enums.ProductType;
 import fr.olprog_b.food_buddy.model.DailyConsumption;
 import fr.olprog_b.food_buddy.model.Product;
@@ -19,7 +18,6 @@ import fr.olprog_b.food_buddy.model.User;
 import fr.olprog_b.food_buddy.repository.DailyConsumptionRepository;
 import fr.olprog_b.food_buddy.repository.ProductRepository;
 import fr.olprog_b.food_buddy.repository.ReservationRepository;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -62,12 +60,7 @@ public class ReservationService {
 
     // Si le produit n'existe pas
     if (optionalProduct.isEmpty()) {
-      throw new IllegalArgumentException("Product not found");
-    }
-
-    // Si le produit est indisponible
-    if (optionalProduct.get().getStatus() == ProductStatus.UNAVAILABLE || optionalProduct.get().getNumberAvailable() == 0) {
-      throw new IllegalArgumentException("Product unavailable");
+      throw new IllegalArgumentException("Produit introuvable");
     }
     
     // Vérifier si le produit a déjà été consommé aujourd'hui
@@ -77,7 +70,12 @@ public class ReservationService {
     
     // Si le produit est déjà consommé aujourd'hui
     if (dailyConsumption != null) {
-      throw new IllegalArgumentException("Product already consumed today");
+      throw new IllegalArgumentException("Produit déjà consommé aujourd'hui");
+    }
+
+    // Si le nombre de produit disponible est égal à 0
+    if (optionalProduct.get().getNumberAvailable() == 0) {
+      throw new IllegalArgumentException("Produit non disponible");
     }
 
     // Créer une nouvelle réservation
@@ -91,7 +89,6 @@ public class ReservationService {
     // Créer une nouvelle consommation journalière
       DailyConsumption newDailyConsumption = new DailyConsumption();
       newDailyConsumption.setConsumptionType(optionalProduct.get().getType());
-      newDailyConsumption.setProduct(optionalProduct.get());
       newDailyConsumption.setUser(user);
       dailyConsumptionRepository.save(newDailyConsumption);
     }
@@ -147,7 +144,7 @@ public class ReservationService {
       return false;
     }
     Reservation reservation = optionalReservation.get();
-    if (!isReservationValid(reservation) || !isValidationCodeValid(reservation, validationCode)) {
+    if (!isReservationValid(reservation) && !isValidationCodeValid(reservation, validationCode)) {
       return false;
     }
     reservationRepository.delete(reservation);

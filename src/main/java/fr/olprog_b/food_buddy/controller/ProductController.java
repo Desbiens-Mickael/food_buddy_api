@@ -37,8 +37,8 @@ public class ProductController {
   }
   
   @GetMapping()
-  public ResponseEntity<List<ProductResponseDTO>> getAllProducts(@PathVariable Long establishmentId) {
-      List<ProductResponseDTO> products = productService.findAllProduct(establishmentId);
+  public ResponseEntity<List<ProductResponseDTO>> getAllProducts(@AuthenticationPrincipal User user, @PathVariable Long establishmentId) {
+      List<ProductResponseDTO> products = productService.findAllProduct(establishmentId, user.getIsEligible(), user.getRole().name());
       if (products.isEmpty()) {
           return ResponseEntity.noContent().build();
       }

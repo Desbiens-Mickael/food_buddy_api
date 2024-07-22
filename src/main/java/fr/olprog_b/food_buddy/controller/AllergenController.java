@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("allergen")
+@RequestMapping("allergens")
 public class AllergenController {
   private final AllergenService allergenService;
 

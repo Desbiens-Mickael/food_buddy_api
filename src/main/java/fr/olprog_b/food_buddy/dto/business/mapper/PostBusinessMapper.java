@@ -14,4 +14,12 @@ public class PostBusinessMapper {
     business.setLogoUrl(postBusinessDTO.logoUrl());
     return business;
   }
+
+  public static PostBusinessDTO convertToDto(Business business) {
+    return new PostBusinessDTO(
+      business.getName(),
+      business.getSiren(),
+      business.getLogoUrl()
+    );
+  }
 }

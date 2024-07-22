@@ -1,12 +1,10 @@
 package fr.olprog_b.food_buddy.dto.establishment;
 
 
-import fr.olprog_b.food_buddy.dto.establishmentAddress.EstablishmentAddressResponseDTO;
-
 public record EstablishmentResponseDTO(
+  Long id,
   String name,
   String siret,
   String email,
-  String phoneNumber,
-  EstablishmentAddressResponseDTO address
+  String phoneNumber
 ) {}
