@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import fr.olprog_b.food_buddy.dto.authentification.LoginResponseDTO;
+import fr.olprog_b.food_buddy.dto.authentification.mapper.LoginResponseMapper;
 import fr.olprog_b.food_buddy.dto.user.PostUserDTO;
 import fr.olprog_b.food_buddy.dto.user.PostUserMerchantDTO;
 import fr.olprog_b.food_buddy.dto.user.PutUserDTO;
@@ -43,13 +45,13 @@ public class UserService {
     return UserMerchantResponseMapper.convertToDto(user);
   }
 
-  public Optional<UserResponseDTO> getUserById(Long id) {
+  public Optional<LoginResponseDTO> getUserById(Long id) {
     Optional<User> optionalUser = userRepository.findById(id);
     if (!optionalUser.isPresent()) {
       return Optional.empty();
     }
 
-    return Optional.of(UserResponseMapper.convertToDTO(optionalUser.get()));
+    return Optional.of(LoginResponseMapper.convertToDTO(optionalUser.get()));
   }
 
   public List<UserResponseDTO> getAllUsers() {
@@ -65,10 +67,24 @@ public class UserService {
     user.setEmail(putUserDTO.email());
     user.setFirstname(putUserDTO.firstname());
     user.setLastname(putUserDTO.lastname());
-    user.setProfileImageUrl(putUserDTO.profileImageUrl());
+    if (putUserDTO.profileImageUrl() != null) {
+      user.setProfileImageUrl(putUserDTO.profileImageUrl());
+    }
     User updatedUser = userRepository.save(user);
 
     return Optional.of(UserResponseMapper.convertToDTO(updatedUser));
+  }
+
+  public Optional<UserResponseDTO> patchAvatarUser(String userEmail, String avatarUrl) {
+    Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+    if (!optionalUser.isPresent()) {
+      return Optional.empty();
+    }
+    User user = optionalUser.get();
+    user.setProfileImageUrl(avatarUrl);
+    userRepository.save(user);
+
+    return Optional.of(UserResponseMapper.convertToDTO(user));
   }
 
   public Boolean deleteUser(Long id) {

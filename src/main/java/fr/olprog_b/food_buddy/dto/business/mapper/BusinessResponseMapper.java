@@ -12,6 +12,7 @@ import fr.olprog_b.food_buddy.model.Business;
 public class BusinessResponseMapper {
   public static BusinessResponseDTO convertToDto(Business business) {
     return new BusinessResponseDTO(
+      business.getId(),
       business.getName(),
       business.getSiren(),
       business.getLogoUrl(),

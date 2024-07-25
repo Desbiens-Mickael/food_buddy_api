@@ -12,6 +12,5 @@ public record PostProductDTO(
   BigDecimal price,
   ProductType type,
   ProductStatus status,
-  String imageUrl,
   List<Long> allergensIds
 ) {}

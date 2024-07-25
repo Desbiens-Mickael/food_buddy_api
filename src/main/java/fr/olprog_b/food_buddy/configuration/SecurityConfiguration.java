@@ -41,8 +41,11 @@ public class SecurityConfiguration {
             .requestMatchers("/auth/login").permitAll()
             .requestMatchers("/auth/users/register").permitAll()
             .requestMatchers("/auth/merchants/register").permitAll()
+            .requestMatchers("/users/upload-avatar/**").permitAll()
+            .requestMatchers("/businesses/upload-logo/**").permitAll()
             // .anyRequest().permitAll()
-            .anyRequest().authenticated())
+            .anyRequest().authenticated()
+            )
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .exceptionHandling(exception -> exception

@@ -15,7 +15,7 @@ public class PostProductMapper {
     product.setPrice(postProductDTO.price());
     product.setType(postProductDTO.type());
     product.setStatus(postProductDTO.status());
-    product.setImageUrl(postProductDTO.imageUrl());
+
     return product;
   }
 }

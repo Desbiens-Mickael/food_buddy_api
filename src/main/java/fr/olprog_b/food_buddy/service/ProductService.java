@@ -55,19 +55,16 @@ public class ProductService {
 
     // Si l'utilisateur est éligible, on récupère les produits disponibles
     if (isEligible && role.equals("USER")) {
-      System.out.println("Not Eligible !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       products = productRepository.findByEstablishmentIdAndNumberAvailableGreaterThan(optionalEstablishment.get().getId(), 0);
     }
 
     // Si l'utilisateur n'est pas éligible, on récupère les produits en disponible
     if (!isEligible && role.equals("USER")) {
-      System.out.println("Eligible !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       products = productRepository.findByEstablishmentIdAndStatusEquals(optionalEstablishment.get().getId(), ProductStatus.AVAILABLE);
     }
 
     // Si l'utilisateur est un marchand, on récupère tous les produits
     if (role.equals("MERCHANT")) {
-      System.out.println("Marchand !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       products = productRepository.findAllByEstablishmentId(optionalEstablishment.get().getId());
     }
     
@@ -103,8 +100,20 @@ public class ProductService {
     Product product = PostProductMapper.convertToEntity(postProductDTO);
     product.setId(id);
     product.setEstablishment(optionalEstablishment.get());
+    product.setImageUrl(optionalProduct.get().getImageUrl());
     product.setAllergens(allergenRepository.findAllById(postProductDTO.allergensIds()));
     return ProductResponseMapper.convertToDTO(productRepository.save(product));
+  }
+
+  public Optional<ProductResponseDTO> patchImageProduct(Long id, String imageUrl) {
+    Optional<Product> optionalProduct = productRepository.findById(id);
+    if (!optionalProduct.isPresent()) {
+      throw new IllegalArgumentException("Produit non trouvé");
+    }
+
+    Product product = optionalProduct.get();
+    product.setImageUrl(imageUrl);
+    return Optional.of(ProductResponseMapper.convertToDTO(productRepository.save(product)));
   }
 
   // Suppression d'un produit
