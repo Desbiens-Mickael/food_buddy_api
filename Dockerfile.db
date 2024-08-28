@@ -1,4 +1,0 @@
-FROM postgres:14-alpine
-
-# Copier le script d'initialisation SQL dans le répertoire d'initialisation de PostgreSQL
-COPY init.sql /docker-entrypoint-initdb.d/

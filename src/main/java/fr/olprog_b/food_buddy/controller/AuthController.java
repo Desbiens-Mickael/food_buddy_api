@@ -93,10 +93,10 @@ public class AuthController {
                 Map<String, String> token = jwtService.generateToken(user.getEmail());
                 ResponseCookie cookie = ResponseCookie.from("token", token.get("bearer"))
                     .httpOnly(true)
-                    .secure(false)
+                    .secure(true)
                     .path("/")
                     .maxAge(7 * 24 * 60 * 60)
-                    .sameSite("NONE")
+                    .sameSite("strict")
                     .build();
 
                 response.addHeader("Set-Cookie", cookie.toString());

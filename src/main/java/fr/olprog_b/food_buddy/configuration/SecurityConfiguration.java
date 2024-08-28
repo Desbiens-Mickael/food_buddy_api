@@ -3,6 +3,7 @@ package fr.olprog_b.food_buddy.configuration;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+  @Value("${cors.origin}")
+  private String corsOrigin;
 
   private final JwtFilter jwtFilter;
 
@@ -68,7 +72,7 @@ public class SecurityConfiguration {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
       CorsConfiguration corsConfiguration = new CorsConfiguration();
-      corsConfiguration.setAllowedOrigins(List.of( "http://localhost:4200"));
+      corsConfiguration.setAllowedOrigins(List.of( corsOrigin));
       corsConfiguration.setAllowedMethods(List.of("*"));
       corsConfiguration.setAllowedHeaders(List.of("*"));
       corsConfiguration.setAllowCredentials(true);
