@@ -1,5 +1,7 @@
 package fr.olprog_b.food_buddy.dto.authentification;
 
+import java.util.Optional;
+
 import fr.olprog_b.food_buddy.enums.UserRole;
 
 public class LoginResponseDTO {
@@ -9,6 +11,25 @@ public class LoginResponseDTO {
   private String profileImageUrl;
   private UserRole role = UserRole.USER;
   private Boolean isEligible = false;
+  private Optional<String> BusinesseName = Optional.empty();
+  private Optional<String> BusinessLogoUrl = Optional.empty();
+
+  public Optional<String> getBusinesseName() {
+    return BusinesseName;
+  }
+
+  public void setBusinesseName(Optional<String> businesseName) {
+    BusinesseName = businesseName;
+  }
+
+  public Optional<String> getBusinessLogoUrl() {
+    return BusinessLogoUrl;
+  }
+
+  public void setBusinessLogoUrl(Optional<String> businessLogoUrl) {
+    BusinessLogoUrl = businessLogoUrl;
+  }
+
 
   public String getEmail() {
     return email;

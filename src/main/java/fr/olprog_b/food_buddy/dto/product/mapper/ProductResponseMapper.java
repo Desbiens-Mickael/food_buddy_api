@@ -11,6 +11,7 @@ import fr.olprog_b.food_buddy.model.Product;
 @Component
 public class ProductResponseMapper {
   public static ProductResponseDTO convertToDTO(Product product) {
+    int reservationsSize = (product.getReservations() != null) ? product.getReservations().size() : 0;
     return new ProductResponseDTO(
       product.getId(),
       product.getName(),
@@ -19,6 +20,8 @@ public class ProductResponseMapper {
       product.getType(),
       product.getStatus(),
       product.getImageUrl(),
+      product.getNumberAvailable(),
+      reservationsSize,
       product.getEstablishment().getId(),
       product.getAllergens().stream().map(AllergenResponseMapper::convertToDto).collect(Collectors.toList())
     );

@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.olprog_b.food_buddy.dto.reservation.DeleteReservationDTO;
 import fr.olprog_b.food_buddy.dto.reservation.ReservationResponseDTO;
 import fr.olprog_b.food_buddy.model.User;
 import fr.olprog_b.food_buddy.service.AuthentificationService;
@@ -44,8 +42,8 @@ public class ReservationController {
   }
 
   // Retourne la liste des Réservations de l'utilisateur
-  @GetMapping("/user")
-  @PreAuthorize("hasRole('ROLE_USER') and #user.isEligible")
+  @GetMapping("/users")
+  @PreAuthorize("hasRole('ROLE_USER')")
   public ResponseEntity<List<ReservationResponseDTO>> getReservations(@AuthenticationPrincipal User user) {
     List<ReservationResponseDTO> reservationDTOs = reservationService.findByUser(user);
     if (reservationDTOs == null) {
@@ -79,17 +77,17 @@ public class ReservationController {
     }
     ReservationResponseDTO reservationResponseDTO = reservationService.getByValidationCode(validationCode);
     if (reservationResponseDTO == null) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.noContent().build();
     }
     return ResponseEntity.ok(reservationResponseDTO);
   }
 
-  @DeleteMapping("/{reservationId}")
+  @DeleteMapping("/{reservationId}/code/{validationCode}")
   @PreAuthorize("hasRole('ROLE_MERCHANT')")
-  public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId, @RequestBody DeleteReservationDTO validationCode) {
-    if (!reservationService.deleteReservation(reservationId, validationCode.validationCode())) {
+  public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId, @PathVariable String validationCode) {
+    if (!reservationService.deleteReservation(reservationId, validationCode)) {
       return ResponseEntity.badRequest().build();
     }
-    return ResponseEntity.ok("Reservation deleted");
+    return  ResponseEntity.ok().build();
   }
 }

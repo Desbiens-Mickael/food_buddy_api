@@ -68,8 +68,8 @@ public class Product {
     @JoinColumn(name = "establishment_id", nullable = false)
     private Establishment establishment;
 
-    @OneToMany(mappedBy = "product")
-    private List<DailyConsumption> dailyConsumptions;
+    // @OneToMany(mappedBy = "product", cascade = CascadeType.DETACH)
+    // private List<DailyConsumption> dailyConsumptions;
 
     @OneToMany(mappedBy = "product")
     private List<Reservation> reservations;

@@ -17,6 +17,7 @@ import fr.olprog_b.food_buddy.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -55,22 +56,30 @@ public class AuthController {
 
     // Création d'un utilisateur
     @PostMapping("/users/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody PostUserDTO newUser) {
-        UserResponseDTO createdUser = userService.createUser(newUser);
-        if (createdUser == null) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> registerUser(@Valid @RequestBody PostUserDTO newUser) {
+        try {
+            UserResponseDTO createdUser = userService.createUser(newUser);
+            if (createdUser == null) {
+                return ResponseEntity.badRequest().body("Erreur lors de la création de compte");
+            } 
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la création de compte");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
     
     // Création d'un commerçant
-    @PostMapping("/merchant/register")
-    public ResponseEntity<UserMerchantResponseDTO> registerMerchant(@Valid @RequestBody PostUserMerchantDTO newMerchant) {
-        UserMerchantResponseDTO createdMerchant = userService.createUserMerchant(newMerchant);
-        if (createdMerchant == null) {
-            return ResponseEntity.badRequest().build();
+    @PostMapping("/merchants/register")
+    public ResponseEntity<?> registerMerchant(@Valid @RequestBody PostUserMerchantDTO newMerchant) {
+        try {
+            UserMerchantResponseDTO createdMerchant = userService.createUserMerchant(newMerchant);
+            if (createdMerchant == null) {
+                return ResponseEntity.badRequest().body("Erreur lors de la création du compte");
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdMerchant);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la création du compte");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdMerchant);
     }
 
     @PostMapping("/login")
@@ -87,7 +96,7 @@ public class AuthController {
                     .secure(true)
                     .path("/")
                     .maxAge(7 * 24 * 60 * 60)
-                    .sameSite("Strict")
+                    .sameSite("strict")
                     .build();
 
                 response.addHeader("Set-Cookie", cookie.toString());
@@ -103,12 +112,15 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@AuthenticationPrincipal User user, HttpServletResponse response) {
+    public ResponseEntity<Map<String, String>> logout(@AuthenticationPrincipal User user, HttpServletResponse response) {
+        Map<String, String> responseBody = new HashMap<>();
         if (user != null) {
             authentificationService.logout(response);
-            return ResponseEntity.ok("Déconnexion réussie");
+            responseBody.put("message", "Déconnexion réussie");
+            return ResponseEntity.ok(responseBody);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Aucun utilisateur authentifié");
+            responseBody.put("error", "Aucun utilisateur authentifié");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
         }
     }
 }

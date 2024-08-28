@@ -17,4 +17,15 @@ public class PostEstablishmentaddressMapper {
     establishmentaddress.setLongitude(postEstablishmentaddressDTO.longitude());
     return establishmentaddress;
   }
+
+  public static PostEstablishmentAddressDTO convertToDto(EstablishmentAddress establishmentaddress) {
+    return new PostEstablishmentAddressDTO(
+      establishmentaddress.getStreetNumber(),
+      establishmentaddress.getStreetName(),
+      establishmentaddress.getZipCode(),
+      establishmentaddress.getCity(),
+      establishmentaddress.getLatitude(),
+      establishmentaddress.getLongitude()
+    );
+  }
 }

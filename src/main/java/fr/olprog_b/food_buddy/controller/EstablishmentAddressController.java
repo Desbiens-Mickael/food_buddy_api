@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.olprog_b.food_buddy.dto.establishmentAddress.EstablishmentAddressResponseDTO;
@@ -20,8 +21,8 @@ public class EstablishmentAddressController {
   }
 
   @GetMapping
-  public ResponseEntity<List<EstablishmentAddressResponseDTO>> getAllEstablishmentAddress() {
-    List<EstablishmentAddressResponseDTO> establishmentAddresseDTOs = establishmentAddressService.getAllEstablishmentAddress();
+  public ResponseEntity<List<EstablishmentAddressResponseDTO>> getAllEstablishmentAddress(@RequestParam String keyword) {
+    List<EstablishmentAddressResponseDTO> establishmentAddresseDTOs = establishmentAddressService.getAllEstablishmentAddress(keyword);
     if (establishmentAddresseDTOs.isEmpty()) {
       return ResponseEntity.noContent().build();
     }

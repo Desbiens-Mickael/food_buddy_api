@@ -7,6 +7,9 @@ public class ReservationResponseMapper {
   
   public static ReservationResponseDTO convertToDto(Reservation reservation) {
     return new ReservationResponseDTO(
+      reservation.getId(),
+      reservation.getProduct().getEstablishment().getName(),
+      reservation.getProduct().getName(),
       reservation.getValidUntil(),
       reservation.getCreatedAt(),
       reservation.getValidationCode()

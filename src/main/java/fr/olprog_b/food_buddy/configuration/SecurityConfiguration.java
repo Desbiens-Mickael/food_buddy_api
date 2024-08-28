@@ -3,6 +3,7 @@ package fr.olprog_b.food_buddy.configuration;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,6 +26,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+  @Value("${cors.origin}")
+  private String corsOrigin;
 
   private final JwtFilter jwtFilter;
 
@@ -39,9 +44,12 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(requests -> requests
             .requestMatchers("/auth/login").permitAll()
             .requestMatchers("/auth/users/register").permitAll()
-            .requestMatchers("/auth/merchant/register").permitAll()
+            .requestMatchers("/auth/merchants/register").permitAll()
+            .requestMatchers("/users/upload-avatar/**").permitAll()
+            .requestMatchers("/businesses/upload-logo/**").permitAll()
             // .anyRequest().permitAll()
-            .anyRequest().authenticated())
+            .anyRequest().authenticated()
+            )
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .exceptionHandling(exception -> exception
@@ -63,13 +71,16 @@ public class SecurityConfiguration {
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-    return request -> {
-      var cors = new CorsConfiguration();
-      cors.setAllowedOrigins(List.of("*"));
-      cors.setAllowedMethods(List.of("*"));
-      cors.setAllowedHeaders(List.of("*"));
-      return cors;
-    };
+      CorsConfiguration corsConfiguration = new CorsConfiguration();
+      corsConfiguration.setAllowedOrigins(List.of( corsOrigin));
+      corsConfiguration.setAllowedMethods(List.of("*"));
+      corsConfiguration.setAllowedHeaders(List.of("*"));
+      corsConfiguration.setAllowCredentials(true);
+      corsConfiguration.addExposedHeader("Set-Cookie");
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", corsConfiguration);
+    return source;
   }
 
   @Bean

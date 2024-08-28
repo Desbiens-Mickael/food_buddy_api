@@ -34,3 +34,9 @@ build/
 
 ### Env ###
 .env
+
+### Upload ###
+upload-dir/**
+
+docker-compose-prod.yml
+docker-compose.yml

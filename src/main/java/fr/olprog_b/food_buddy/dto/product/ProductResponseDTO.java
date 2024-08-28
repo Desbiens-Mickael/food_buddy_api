@@ -15,6 +15,8 @@ public record ProductResponseDTO(
   ProductType type,
   ProductStatus status,
   String imageUrl,
+  Integer numberAvailable,
+  Integer numberReservations,
   Long establishmentId,
   List<AllergenResponseDTO> allergens
 ) {
