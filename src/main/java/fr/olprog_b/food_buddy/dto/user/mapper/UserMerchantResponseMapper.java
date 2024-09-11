@@ -1,7 +1,5 @@
 package fr.olprog_b.food_buddy.dto.user.mapper;
 
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 
 import fr.olprog_b.food_buddy.dto.business.mapper.BusinessResponseMapper;
@@ -16,7 +14,8 @@ public class UserMerchantResponseMapper {
       user.getLastname(),
       user.getProfileImageUrl(),
       user.getEmail(),
-      user.getBusinesses().stream().map(BusinessResponseMapper::convertToDto).collect(Collectors.toList())
+      // TODO : Fait
+      BusinessResponseMapper.convertToDto(user.getBusiness())
     );
   }
 }

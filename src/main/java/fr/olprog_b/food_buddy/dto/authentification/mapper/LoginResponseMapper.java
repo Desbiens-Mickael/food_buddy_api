@@ -18,9 +18,9 @@ public class LoginResponseMapper {
       loginResponseDTO.setRole(user.getRole());
       loginResponseDTO.setIsEligible(user.getIsEligible());
 
-      if (!user.getBusinesses().isEmpty()) {
-          loginResponseDTO.setBusinesseName(Optional.ofNullable(user.getBusinesses().get(0).getName()));
-          loginResponseDTO.setBusinessLogoUrl(Optional.ofNullable(user.getBusinesses().get(0).getLogoUrl()));
+      if (user.getBusiness() != null) {
+          loginResponseDTO.setBusinesseName(Optional.ofNullable(user.getBusiness().getName()));
+          loginResponseDTO.setBusinessLogoUrl(Optional.ofNullable(user.getBusiness().getLogoUrl()));
       } else {
           loginResponseDTO.setBusinesseName(Optional.empty());
           loginResponseDTO.setBusinessLogoUrl(Optional.empty());

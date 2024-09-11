@@ -13,8 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -44,8 +44,8 @@ public class Business {
   private LocalDateTime updatedAt;
 
   // Relations
-  
-  @ManyToOne()
+  // TODO : FAIT
+  @OneToOne()
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 

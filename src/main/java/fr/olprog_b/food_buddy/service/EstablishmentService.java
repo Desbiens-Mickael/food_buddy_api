@@ -26,9 +26,10 @@ public class EstablishmentService {
 
   public List<EstablishmentResponseDTO> getAllEstablishment(Long UserId) {
     User user = userRepository.findById(UserId).get();
+    // TODO : Fait
     return establishmentRepository
-            .findByBusinessId(user.getBusinesses()
-            .get(0).getId())
+            .findByBusinessId(user.getBusiness()
+            .getId())
             .stream()
             .map(EstablishmentResponseMapper::convertToDto)
             .collect(Collectors.toList());

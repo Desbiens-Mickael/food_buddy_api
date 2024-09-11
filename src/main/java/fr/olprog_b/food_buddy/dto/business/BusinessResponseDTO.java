@@ -1,13 +1,9 @@
 package fr.olprog_b.food_buddy.dto.business;
 
-import java.util.List;
-
-import fr.olprog_b.food_buddy.dto.establishment.EstablishmentResponseWithAddressDTO;
-
 public record BusinessResponseDTO(
   Long id,
   String name,
   String siren,
-  String logoUrl,
-  List<EstablishmentResponseWithAddressDTO> establishments
+  String logoUrl
+  // List<EstablishmentResponseWithAddressDTO> establishments
 ) {}
