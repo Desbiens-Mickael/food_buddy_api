@@ -3,6 +3,7 @@ package fr.olprog_b.food_buddy.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.olprog_b.food_buddy.dto.establishment.EstablishmentResponseDTO;
+import fr.olprog_b.food_buddy.dto.establishment.PostEstablishmentDTO;
 import fr.olprog_b.food_buddy.model.User;
 import fr.olprog_b.food_buddy.service.EstablishmentService;
 
@@ -12,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -28,6 +32,20 @@ public class EstablishmentController {
   @PreAuthorize("hasRole('ROLE_MERCHANT')")
   public ResponseEntity<List<EstablishmentResponseDTO>> getAllEstablishment(@AuthenticationPrincipal User user) {
     List<EstablishmentResponseDTO> establishmentResponseDTO = establishmentService.getAllEstablishment(user.getId());
+    if (establishmentResponseDTO == null) {
+      return ResponseEntity.badRequest().build();
+    }
+    return ResponseEntity.ok(establishmentResponseDTO);
+  }
+
+  @PutMapping("/{establishmentId}")
+  @PreAuthorize("hasRole('ROLE_MERCHANT')")
+  public ResponseEntity<EstablishmentResponseDTO> updateEstablishment(
+    @AuthenticationPrincipal User user, 
+    @PathVariable Long establishmentId,
+    @RequestBody PostEstablishmentDTO establishment
+  ) {
+    EstablishmentResponseDTO establishmentResponseDTO = establishmentService.updateEstablishment(establishment, establishmentId);
     if (establishmentResponseDTO == null) {
       return ResponseEntity.badRequest().build();
     }

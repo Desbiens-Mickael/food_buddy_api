@@ -13,9 +13,7 @@ public class EstablishmentResponseMapper {
       establishment.getName(),
       establishment.getSiret(),
       establishment.getEmail(),
-      establishment.getPhoneNumber(),
-      establishment.getBusiness().getName(),
-      establishment.getBusiness().getLogoUrl()
+      establishment.getPhoneNumber()
     );
   }
 }

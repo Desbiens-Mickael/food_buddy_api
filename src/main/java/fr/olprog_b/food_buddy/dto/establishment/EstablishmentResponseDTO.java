@@ -6,7 +6,5 @@ public record EstablishmentResponseDTO(
   String name,
   String siret,
   String email,
-  String phoneNumber,
-  String businessName,
-  String logoBusinessUrl
+  String phoneNumber
 ) {}
