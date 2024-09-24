@@ -23,4 +23,15 @@ public class EstablishmentAddressResponseMapper {
       business
     );
   }
+
+  public static EstablishmentAddress convertToEntity(PostEstablishmentAddressDTO addressResponseDTO) {
+    EstablishmentAddress establishmentaddress = new EstablishmentAddress();
+    establishmentaddress.setStreetNumber(addressResponseDTO.streetNumber());
+    establishmentaddress.setStreetName(addressResponseDTO.streetName());
+    establishmentaddress.setZipCode(addressResponseDTO.zipCode());
+    establishmentaddress.setCity(addressResponseDTO.city());
+    establishmentaddress.setLatitude(addressResponseDTO.latitude());
+    establishmentaddress.setLongitude(addressResponseDTO.longitude());
+    return establishmentaddress;
+  }
 }

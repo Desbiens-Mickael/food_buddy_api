@@ -6,9 +6,12 @@ COPY . .
 RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:22-jdk-alpine
+
 VOLUME /tmp
+
 ARG VERSION=0.0.1-SNAPSHOT
 ARG NAME=food_buddy
+
 COPY --from=build /workspace/app/target/$NAME-$VERSION.jar app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]

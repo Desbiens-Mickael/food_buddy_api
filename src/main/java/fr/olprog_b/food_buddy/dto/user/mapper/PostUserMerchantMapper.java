@@ -34,7 +34,7 @@ public class PostUserMerchantMapper {
 
     User user = postUserMapper.convertToEntity(newUser.newUser());
     user.setRole(UserRole.MERCHANT);
-    user.setBusinesses(List.of(business));
+    user.setBusiness(business);
     business.setUser(user);
 
     return user;
