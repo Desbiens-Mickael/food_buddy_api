@@ -47,7 +47,6 @@ public class BusinessService {
     }
     Business business = optionalBusiness.get();
     business.setName(postBusinessDTO.name());
-    business.setSiren(postBusinessDTO.siren());
     Business updatedBusiness = businessRepository.save(business);
 
     return Optional.of(BusinessResponseMapper.convertToDto(updatedBusiness));
